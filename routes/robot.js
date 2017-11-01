@@ -13,7 +13,7 @@ function convertMessage(e, message) {
   return {error: "No matched X-Gitlab-Event header"}
 }
 function convertPipelineEvent(message) {
-  if (message.status !== 'failed') {
+  if (message.object_attributes.status !== 'failed') {
     return {error: "Pipeline is sucessed"};
   }
 
