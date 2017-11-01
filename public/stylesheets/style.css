@@ -6,3 +6,15 @@ body {
 a {
   color: #00B7FF;
 }
+
+.unknown {
+  color: gray;
+}
+
+.success {
+  color: green;
+}
+
+.failed {
+  color: red;
+}

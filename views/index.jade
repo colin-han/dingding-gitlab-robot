@@ -1,5 +1,18 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 #{title}
+  h2
+    i State:&nbsp;
+    span(class=success) #{success}
+  hr
+  i Latest Message
+  pre
+    code.json #{latestMessage}
+
+  - if (success === 'failed') {
+  hr
+  i Error Message:
+  pre
+    code.json #{errorMessage}
+  - }
