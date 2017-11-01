@@ -21,11 +21,11 @@ function convertPipelineEvent(message) {
     message: {
       msgtype: 'markdown',
       markdown: {
-        title: 'Pipeline编译失败',
-        text: `项目${message.project.namespace}/${message.project.name}编译失败\n
-* _作者_: ${message.commit.author.name}
-* _${message.object_attributes.tag ? 'Tag' : 'Branch'}_: ${message.object_attributes.ref}\n
-> [更多信息](https://dev.p2m.net.cn/${message.project.path_with_namespace}/pipelines/${message.object_attributes.id}`
+        title: "编译失败",
+        text: `项目**"${message.project.namespace}/${message.project.name}"**编译失败\n
+* _作者_: **${message.commit.author.name}**
+* _${message.object_attributes.tag ? 'Tag' : 'Branch'}_: **${message.object_attributes.ref}**\n
+> [更多信息](https://dev.p2m.net.cn/${message.project.path_with_namespace}/pipelines/${message.object_attributes.id})`
       }
     }
   };
@@ -44,29 +44,39 @@ router.post('/:projectToken/', (req, res, next) => {
     return;
   }
 
+  let m = JSON.stringify(result.message);
+
+  console.log(`POST https://oapi.dingtalk.com/robot/send?access_token=${projectToken}`);
+  console.log('  ' + m);
   let c = https.request({
     hostname: 'oapi.dingtalk.com',
     port: 443,
     path: `/robot/send?access_token=${projectToken}`,
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'Content-Length': m.length
+      'Content-Type': 'application/json'
     }
   }, (r)=> {
     if (r.statusCode !== 200) {
       pushMessage('failed', req.body, {statusCode: r.statusCode});
       r.result();
     } else {
-      pushMessage('success', req.body);
+      let data = '';
+      r.on('data', (b)=>data += b);
+      r.on('end', ()=>{
+        let result2 = JSON.parse(data);
+        if (result2 !== 0) {
+          pushMessage('failed', req.body, result2);
+        } else {
+          pushMessage('success', req.body);
+        }
+      });
     }
   });
 
   pushMessage('sending', req.body);
-  c.write(JSON.stringify(result.message), 'utf8');
+  c.write(m, 'utf8');
   c.end();
-
-  res.end('');
 });
 
 module.exports = router;
