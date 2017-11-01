@@ -7,6 +7,7 @@ const {pushMessage} = require('../store/messages');
 function convertMessage(e, message) {
   switch (e) {
     case 'Pipeline Hook':
+    case 'Pipeline Event': // for test
       return convertPipelineEvent(message);
   }
   return {error: "No matched X-Gitlab-Event header"}
