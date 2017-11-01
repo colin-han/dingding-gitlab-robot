@@ -6,7 +6,7 @@ const {pushMessage} = require('../store/messages');
 
 function convertMessage(e, message) {
   switch (e) {
-    case 'Pipeline Event':
+    case 'Pipeline Hook':
       return convertPipelineEvent(message);
   }
   return {error: "No matched X-Gitlab-Event header"}
@@ -23,8 +23,8 @@ function convertPipelineEvent(message) {
         title: 'Pipeline编译失败',
         text: `项目${message.project.namespace}/${message.project.name}编译失败\n
 * _作者_: ${message.commit.author.name}
-* _${message.tag ? 'Tag' : 'Branch'}_: ${message.object_attributes.ref}\n
-> [更多信息](https://dev.p2m.net.cn/${message.path_with_namespace}/pipelines/${message.object_attributes.id}`
+* _${message.object_attributes.tag ? 'Tag' : 'Branch'}_: ${message.object_attributes.ref}\n
+> [更多信息](https://dev.p2m.net.cn/${message.project.path_with_namespace}/pipelines/${message.object_attributes.id}`
       }
     }
   };
