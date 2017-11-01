@@ -10,7 +10,7 @@ block content
   pre
     code.json #{latestMessage}
 
-  - if (success === 'failed') {
+  - if (errorMessage) {
   hr
   i Error Message:
   pre
