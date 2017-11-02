@@ -65,7 +65,7 @@ router.post('/:projectToken/', (req, res, next) => {
       r.on('data', (b)=>data += b);
       r.on('end', ()=>{
         let result2 = JSON.parse(data);
-        if (result2 !== 0) {
+        if (result2.errcode !== 0) {
           pushMessage('failed', req.body, result2);
         } else {
           pushMessage('success', req.body);
