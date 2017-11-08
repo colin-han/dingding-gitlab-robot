@@ -25,6 +25,9 @@ function convertPipelineEvent(message) {
         text: `项目**"${message.project.namespace}/${message.project.name}"**编译失败\n
 * _作者_: **${message.commit.author.name}**
 * _${message.object_attributes.tag ? 'Tag' : 'Branch'}_: **${message.object_attributes.ref}**\n
+* _提交_: 
+> ${message.commit.message}
+----
 > [更多信息](https://dev.p2m.net.cn/${message.project.path_with_namespace}/pipelines/${message.object_attributes.id})`
       }
     }
