@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "docker-build": "docker build -t dingding-gitlab-robot .",
+    "docker-run": "docker kill dingding-gitlab-robot || true && docker rm dingding-gitlab-robot || true && docker run -d -p 13005:3000 dingding-gitlab-robot"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
