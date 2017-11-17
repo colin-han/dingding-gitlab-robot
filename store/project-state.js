@@ -6,7 +6,7 @@ exports.updateState = function updateState (message) {
     return false;
   }
 
-  const projectId = message.project.path_with_namespace;
+  const projectId = message.project.path_with_namespace + '#' + message.object_attributes.ref;
   const success = message.object_attributes.status !== 'failed';
   if (status[projectId] !== success) {
     status[projectId] = success;
