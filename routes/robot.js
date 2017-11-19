@@ -24,7 +24,7 @@ function convertPipelineEvent(message) {
         msgtype: 'markdown',
         markdown: {
           title: '编译正常',
-          text: `# **编译恢复正常**
+          text: `![Error](http://114.215.16.218:13005/images/success.png) **编译恢复正常**
 ----
 * _项目_: **${message.project.namespace}/${message.project.name}**
 * _作者_: **${message.commit.author.name}**
@@ -43,7 +43,7 @@ function convertPipelineEvent(message) {
       msgtype: 'markdown',
       markdown: {
         title: "编译失败",
-        text: `# **编译失败**
+        text: `![Error](http://114.215.16.218:13005/images/error.png) **编译失败**
 ----
 * _项目_: **${message.project.namespace}/${message.project.name}**
 * _作者_: **${message.commit.author.name}**
