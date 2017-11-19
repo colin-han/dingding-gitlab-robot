@@ -24,14 +24,14 @@ function convertPipelineEvent(message) {
         msgtype: 'markdown',
         markdown: {
           title: '编译正常',
-          text: `![Error](http://114.215.16.218:13005/images/success.png) **编译恢复正常**
-----
+          text: `![Success](http://114.215.16.218:13005/images/success.png) **编译恢复正常**  
+- - -
 * _项目_: **${message.project.namespace}/${message.project.name}**
 * _作者_: **${message.commit.author.name}**
 * _${message.object_attributes.tag ? 'Tag' : 'Branch'}_: **${message.object_attributes.ref}**\n
 * _提交_: 
 > ${message.commit.message}
-----
+- - -
 > [更多信息](https://dev.p2m.net.cn/${message.project.path_with_namespace}/pipelines/${message.object_attributes.id})`
         }
       }
@@ -43,14 +43,14 @@ function convertPipelineEvent(message) {
       msgtype: 'markdown',
       markdown: {
         title: "编译失败",
-        text: `![Error](http://114.215.16.218:13005/images/error.png) **编译失败**
-----
+        text: `![Error](http://114.215.16.218:13005/images/error.png) **编译失败**  
+- - -
 * _项目_: **${message.project.namespace}/${message.project.name}**
 * _作者_: **${message.commit.author.name}**
 * _${message.object_attributes.tag ? 'Tag' : 'Branch'}_: **${message.object_attributes.ref}**\n
 * _提交_: 
 > ${message.commit.message}
-----
+- - -
 > [更多信息](https://dev.p2m.net.cn/${message.project.path_with_namespace}/pipelines/${message.object_attributes.id})`
       }
     }
