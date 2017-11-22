@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const https = require('https');
 const express = require('express');
 const router = express.Router();
@@ -28,7 +29,7 @@ function convertPipelineEvent(message) {
 - - -
 * _项目_: **${message.project.namespace}/${message.project.name}**
 * _作者_: **${message.commit.author.name}**
-* _${message.object_attributes.tag ? 'Tag' : 'Branch'}_: **${message.object_attributes.ref}**\n
+* _${message.object_attributes.tag ? '标签' : '分支'}_: **${message.object_attributes.ref}**
 * _提交_: 
 > ${message.commit.message}
 - - -
@@ -38,6 +39,10 @@ function convertPipelineEvent(message) {
     }
   }
 
+  const failedBuild = _.find(message.builds, function (build) {
+    return build.status === 'failed'
+  });
+  const failedStage = failedBuild && failedBuild.stage;
   return {
     message: {
       msgtype: 'markdown',
@@ -47,7 +52,8 @@ function convertPipelineEvent(message) {
 - - -
 * _项目_: **${message.project.namespace}/${message.project.name}**
 * _作者_: **${message.commit.author.name}**
-* _${message.object_attributes.tag ? 'Tag' : 'Branch'}_: **${message.object_attributes.ref}**\n
+* _${message.object_attributes.tag ? '标签' : '分支'}_: **${message.object_attributes.ref}**
+* _阶段_: **${failedStage}**
 * _提交_: 
 > ${message.commit.message}
 - - -
